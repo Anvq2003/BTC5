@@ -14,16 +14,15 @@ const CreateStudentForm = () => {
   const onFinish = async (values: IStudent) => {
     const newValues = { ...values };
     newValues.birthdate = dayjs(values.birthdate).toISOString();
-    console.log('newValues', newValues);
     setLoading(true);
-    // try {
-    //   await StudentService.createStudent(values);
-    //   message.success('Tạo sinh viên thành công!');
-    //   form.resetFields();
-    // } catch (error) {
-    //   message.error('Tạo sinh viên thất bại!');
-    //   console.error('error', error);
-    // }
+    try {
+      await StudentService.createStudent(values);
+      message.success('Tạo lý lịch sinh viên thành công!');
+      form.resetFields();
+    } catch (error) {
+      message.error('Tạo lý lịch sinh viên thất bại!');
+      console.error('error', error);
+    }
     setLoading(false);
   };
 
@@ -80,13 +79,12 @@ const CreateStudentForm = () => {
       options: ['Công nghệ thông tin', 'Kinh tế', 'Quản trị kinh doanh', 'Khác'],
       rules: [],
     },
-    { name: 'class', label: 'Lớp', type: 'input', rules: [] },
   ];
 
   return (
     <div className={styles.container}>
       <div className={styles.formWrapper}>
-        <h1 className={styles.title}>Tạo Sinh Viên Mới</h1>
+        <h1 className={styles.title}>Khai báo lý lịch</h1>
         <Form form={form} onFinish={onFinish} layout="vertical">
           <Row gutter={16}>
             {fieldConfig.map((field) => (

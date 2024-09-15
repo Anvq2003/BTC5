@@ -12,16 +12,14 @@ export const POST = async (request: any) => {
     phone_number,
     email,
     major,
-    class: studentClass,
-    avatar_url,
   } = payload;
 
   try {
     const pool = await connectToDB();
 
     const query = `
-      INSERT INTO student (student_id, fullname, birthdate, gender, address, phone_number, email, major, class)
-      VALUES (@student_id, @fullname, @birthdate, @gender, @address, @phone_number, @email, @major, @class)
+      INSERT INTO student (student_id, fullname, birthdate, gender, address, phone_number, email, major)
+      VALUES (@student_id, @fullname, @birthdate, @gender, @address, @phone_number, @email, @major)
     `;
 
     const request = pool
@@ -34,7 +32,6 @@ export const POST = async (request: any) => {
       .input('phone_number', phone_number)
       .input('email', email)
       .input('major', major)
-      .input('class', studentClass);
 
     await request.query(query);
     return new Response(JSON.stringify({ message: 'Student created successfully' }), {

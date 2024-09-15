@@ -8,7 +8,6 @@ export interface IStudent {
   phone_number?: string;    
   email?: string;           
   major?: string;           
-  class?: string;            
 }
 
 const createStudent = async (payload: IStudent) => {
