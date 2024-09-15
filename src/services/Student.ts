@@ -1,4 +1,4 @@
-import CONFIG from '@/config';
+import axios from 'axios';
 export interface IStudent {
   student_id: string;       
   fullname: string;         
@@ -12,20 +12,8 @@ export interface IStudent {
 
 const createStudent = async (payload: IStudent) => {
   try {
-    const response = await fetch(CONFIG.URL + "/api/student", {
-      method: "POST",
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(payload),
-    });
-
-    if (!response.ok) {
-      const errorText = await response.text();
-      throw new Error(`Error: ${response.status} - ${errorText}`);
-    }
-
-    return await response.json();
+    const response = await axios.post(`/api/student`, payload);
+    return response.data;
   } catch (error) {
     console.error("Failed to create student:", error);
     throw error; // Rethrow error to be handled by the caller
@@ -33,9 +21,13 @@ const createStudent = async (payload: IStudent) => {
 };
 
 const getStudents = async () => {
-  return await fetch(CONFIG.URL + "/api/student", {
-    method: "GET",
-  });
+  try {
+    const response = await axios.get(`/api/student`);
+    return response.data;
+  } catch (error) {
+    console.error("Failed to get students:", error);
+    throw error; // Rethrow error to be handled by the caller
+  }
 };
 
 const StudentService = {

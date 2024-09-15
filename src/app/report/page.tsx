@@ -10,8 +10,7 @@ const Report = () => {
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      const response = await StudentService.getStudents();
-      const result = await response.json();
+      const result = await StudentService.getStudents();
       setData(result);
       console.log(result);
       setLoading(false);
