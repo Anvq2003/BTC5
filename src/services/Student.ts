@@ -22,7 +22,11 @@ const createStudent = async (payload: IStudent) => {
 
 const getStudents = async () => {
   try {
-    const response = await axios.get(`/api/student`);
+    const response = await axios({
+      method: 'get',
+      url: '/api/student',
+      timeout: 10000,
+    })
     return response.data;
   } catch (error) {
     console.error("Failed to get students:", error);
